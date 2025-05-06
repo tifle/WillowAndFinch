@@ -18,10 +18,10 @@ struct ContentView: View {
                     Text("Home")
                 }
                 .tag(1)
-            FYPView()
+            RecommendationView()
                 .tabItem {
                     Image (systemName: "02.circle")
-                    Text("For You Page")
+                    Text("Recommendation Page")
                 }
                 .tag(2)
             

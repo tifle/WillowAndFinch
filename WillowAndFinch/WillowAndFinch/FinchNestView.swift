@@ -34,7 +34,7 @@ struct FinchNestView: View {
                     .bold()
                     .foregroundColor(.latteMilk)
                     .padding()
-                    .padding(.top, -15) // adjust the value to your liking
+                    .padding(.top, -15)
 
                     .frame(maxWidth: .infinity,
                            alignment: .center)

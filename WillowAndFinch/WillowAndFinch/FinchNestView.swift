@@ -11,6 +11,7 @@ extension Color {
     static let sageGreen = Color(red: 0.53, green: 0.57, blue: 0.40)
     static let cafeBrown = Color(red: 0.42, green: 0.35, blue: 0.28)
     static let latteMilk = Color(red: 1, green: 0.96, blue: 0.91)
+    static let warmBeige = Color(red: 0.906, green: 0.847, blue: 0.788)
 }
 
 struct FinchNestView: View {
@@ -28,14 +29,19 @@ struct FinchNestView: View {
                 // Title with background
                 Text("Your Nest")
                     .font(.custom("Didot", size: 32))
+
+
                     .bold()
                     .foregroundColor(.latteMilk)
                     .padding()
+                    .padding(.top, -15) // adjust the value to your liking
+
                     .frame(maxWidth: .infinity,
                            alignment: .center)
                 
                 // Currently Reading section
                 Text("    Currently Reading")
+//                    .padding()
                     .font(.custom("Didot Bold", size: 28))
                     .bold()
                     .foregroundColor(.latteMilk)
@@ -89,4 +95,8 @@ struct FinchNestView: View {
             Spacer()
         }.background(Color.latteMilk)
     }
+}
+
+#Preview {
+    FinchNestView()
 }

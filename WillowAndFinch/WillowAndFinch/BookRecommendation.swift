@@ -7,13 +7,7 @@
 
 import Foundation
 
-struct BookData: Codable {
-    let book_titles: [String]
-    let book_authors: [String: String]
-    let similarity_scores: [[Double]]
-}
-
-class BookRecommender {
+class BookRecommendation {
     static func loadBookData() -> BookData? {
         guard let url = Bundle.main.url(forResource: "book_data_cleaned", withExtension: "json"),
               let data = try? Data(contentsOf: url) else {
@@ -48,3 +42,4 @@ class BookRecommender {
         return nil
     }
 }
+

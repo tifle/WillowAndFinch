@@ -14,27 +14,27 @@ struct ContentView: View {
         TabView (selection: $selection){
             HomeView()
                 .tabItem {
-                    Image (systemName: "01.circle")
+                    Image (systemName: "house")
                     Text("Home")
                 }
                 .tag(1)
             RecommendationView()
                 .tabItem {
-                    Image (systemName: "02.circle")
+                    Image (systemName: "sparkles")
                     Text("Recommendation Page")
                 }
                 .tag(2)
             
             FinchNestView()
                 .tabItem {
-                    Image (systemName: "03.circle")
+                    Image (systemName: "books.vertical")
                     Text("Finch Nest")
                 }
                 .tag(3)
             
             MoreInfoView()
                 .tabItem{
-                    Image(systemName: "04.circle")
+                    Image(systemName: "info.circle")
                     Text("More Info")
                 }
                 .tag(4)

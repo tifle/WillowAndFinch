@@ -13,6 +13,7 @@ struct RecommendationView: View {
     var body: some View {
         VStack {
             Text(recommendationText)
+                .font(.custom("Didot", size: 28))
                 .padding()
         }
         .onAppear {

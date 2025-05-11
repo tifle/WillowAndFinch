@@ -8,38 +8,85 @@
 import SwiftUI
 
 extension Color {
-    static let sageGreen = Color(red: 0.49, green: 0.55, blue: 0.40)
-    static let lightGrayBackground = Color(red: 0.95, green: 0.95, blue: 0.97)
+    static let sageGreen = Color(red: 0.53, green: 0.57, blue: 0.40)
+    static let cafeBrown = Color(red: 0.42, green: 0.35, blue: 0.28)
+    static let latteMilk = Color(red: 1, green: 0.96, blue: 0.91)
 }
 
 struct FinchNestView: View {
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        ZStack(alignment: .top) {
+            // Background color for entire content area
+            VStack(spacing: 0) {
+                Color.sageGreen.frame(height: 110)
+                Color.cafeBrown
+            }
+            .edgesIgnoringSafeArea(.top)
+            
+            // Content
+            VStack(alignment: .leading, spacing: 20) {
                 // Title with background
                 Text("Your Nest")
                     .font(.custom("Didot", size: 32))
                     .bold()
-                    .foregroundColor(.white)
+                    .foregroundColor(.latteMilk)
+                    .padding()
+                    .frame(maxWidth: .infinity,
+                           alignment: .center)
+                
+                // Currently Reading section
+                Text("    Currently Reading")
+                    .font(.custom("Didot Bold", size: 28))
+                    .bold()
+                    .foregroundColor(.latteMilk)
+                
+                // Book links
+                VStack(alignment: .leading, spacing: 0) {
+                    NavigationLink(
+                        destination: ReadingView(),
+                        label: {
+                            HStack {
+                                Text("The Yellow Wallpaper")
+                                    .foregroundColor(.black)
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(.gray)
+                            }
+                            .padding()
+                            .background(Color.latteMilk)
+                        }
+                    )
+                    
+                    Divider()
+                    
+                    Text("Another Current Book")
+                        .padding()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(Color.latteMilk)
+                }
+                .cornerRadius(8)
+                .padding(.horizontal)
+                
+                // Saved for Later section
+                Text("    Saved for Later")
+                    .font(.custom("Didot Bold", size: 28))
+                    .bold()
+                    .foregroundColor(.latteMilk)
+                    .padding(.top, 8)
+                
+                // Book saved
+                Text("Book You Saved")
                     .padding()
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(Color(red: 0.49, green: 0.55, blue: 0.40))
-                
-                Text("    Currently Reading")
-                    .font(.custom("Didot", size: 16))
-                List {
-                    NavigationLink("The Yellow Wallpaper", destination: ReadingView())
-                    Text("Another Current Book")
-                }
-                
-                Text("     Saved for Later")
-                    .font(.custom("Didot Bold", size: 16))
-                List {
-                    Text("Book You Saved")
-                        .font(.custom("Didot", size: 16))
-                }
+                    .background(Color.latteMilk)
+                    .cornerRadius(8)
+                    .padding(.horizontal)
                 
                 Spacer()
             }
-        }
+            .padding(.bottom, 49)
+            
+            Spacer()
+        }.background(Color.latteMilk)
     }
-
+}

@@ -23,6 +23,7 @@ struct ReadingView: View {
 //    @AppStorage("hasSeenGuide") private var hasSeenGuide = false
     @State private var showGuide = false
     @State private var guideStep = 0
+    @State private var dontShow = false
 
     // Track speaking state
     @State private var isSpeakingText = false
@@ -118,11 +119,12 @@ struct ReadingView: View {
                         .onAppear {
                             scrollViewProxy = proxy
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-//                                if !hasSeenGuide {
+                                // removes the guide after you use it once
+                                if !dontShow {
                                     showGuide = true
-//                                    hasSeenGuide = true
+                                    dontShow = true
                                     guideStep = 0
-//                                }
+                                }
                             }
                         }
                     }
@@ -147,12 +149,42 @@ struct ReadingView: View {
 
             // GUIDE OVERLAY
             if showGuide {
-                Color.black.opacity(0.6).ignoresSafeArea()
+                // Dimmed background with hole for focus area
+                Color.black.opacity(0.6)
+                    .ignoresSafeArea()
+                    .mask(
+                        Rectangle()
+                        // Circle for guide step 0 (only show when guideStep is 0)
+                            .overlay(
+                                Group {
+                                    if guideStep == 0 {
+                                        Circle()
+                                            .frame(width: 50, height: 50)
+                                            .offset(x: -UIScreen.main.bounds.width / 2 + 30, y: -325)
+                                            .blendMode(.destinationOut)
+                                    }
+                                }
+                            )
+                            // Circle for guide step 1 (only show when guideStep is 1)
+                            .overlay(
+                                Group {
+                                    if guideStep == 1 {
+                                        Circle()
+                                            .frame(width: 50, height: 50)
+                                            .offset(x: 170, y: -325) // Adjust position for guide step 1
+                                            .blendMode(.destinationOut)
+                                    }
+                                }
+                            )
+                    )
+                    .compositingGroup()
                 VStack {
                     Spacer()
                     Group {
                         if guideStep == 0 {
-                            Text("Tap the 'A' icon to change font, size, and toggle dark mode.")
+                            Text("Use the 'AA' icon to change font, size, and toggle dark mode.")
+                            // highlight or arrow the icon
+                            
                         } else if guideStep == 1 {
                             Text("Use the speaker button to play or stop the audio narration.")
                         }

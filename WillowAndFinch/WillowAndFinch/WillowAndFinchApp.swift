@@ -15,18 +15,32 @@ struct WillowAndFinchApp: App {
         tabBarAppearance.configureWithOpaqueBackground()
         tabBarAppearance.backgroundColor = UIColor(named: "TabColor")
 
-        // Customize tab bar item font and color
-        let attributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont(name: "Avenir", size: 12)!,
-            .foregroundColor: UIColor.label  // Or a custom color if you prefer
+        let textColor = UIColor(named: "TextColor") ?? .label
+        let normalFont = UIFont(name: "Avenir", size: 11)!
+        let boldFont = UIFont.boldSystemFont(ofSize: 11) // Bold font
+        let selectedColor = UIColor(named: "Grass")
+
+        // Title text attributes
+        tabBarAppearance.stackedLayoutAppearance.normal.titleTextAttributes = [
+            .foregroundColor: textColor,
+            .font: normalFont
+        ]
+        tabBarAppearance.stackedLayoutAppearance.selected.titleTextAttributes = [
+            .foregroundColor: textColor,
+            .font: boldFont // Bold font for selected tab
         ]
 
-        UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .normal)
-        UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .selected)
+        // Icon color attributes
+        tabBarAppearance.stackedLayoutAppearance.normal.iconColor = textColor
+        tabBarAppearance.stackedLayoutAppearance.selected.iconColor = selectedColor
 
+        // Global tint
+        UITabBar.appearance().tintColor = selectedColor
         UITabBar.appearance().standardAppearance = tabBarAppearance
         UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
     }
+
+
 
     var body: some Scene {
         WindowGroup {

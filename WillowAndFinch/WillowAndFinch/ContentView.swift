@@ -20,7 +20,7 @@ struct ContentView: View {
             RecommendationView()
                 .tabItem {
                     Image (systemName: "sparkles")
-                    Text("Recommendation Page")
+                    Text("For You")
                 }
                 .tag(2)
             

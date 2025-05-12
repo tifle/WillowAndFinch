@@ -24,8 +24,11 @@ struct BookDetailView: View {
                     .padding(50)
                 
                 Text("Title")
+                    .font(.custom("Georgia", size: 25))
                     .bold()
                 Text("Author")
+                    .font(.custom("Georgia", size: 18))
+                    .italic()
                 
 //enter regular book.csv file to get this info + change cover from default
                 ScrollView{

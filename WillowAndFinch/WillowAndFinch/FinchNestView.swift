@@ -28,9 +28,7 @@ struct FinchNestView: View {
             VStack(alignment: .leading, spacing: 20) {
                 // Title with background
                 Text("Your Nest")
-                    .font(.custom("Didot", size: 32))
-
-
+                    .font(.custom("Georgia", size: 30))
                     .bold()
                     .foregroundColor(.latteMilk)
                     .padding()
@@ -42,7 +40,7 @@ struct FinchNestView: View {
                 // Currently Reading section
                 Text("    Currently Reading")
 //                    .padding()
-                    .font(.custom("Didot Bold", size: 28))
+                    .font(.custom("Georgia", size: 20))
                     .bold()
                     .foregroundColor(.latteMilk)
                 
@@ -68,6 +66,7 @@ struct FinchNestView: View {
                     Text("Another Current Book")
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .font(.custom("Avenir", size: 16))
                         .background(Color.latteMilk)
                 }
                 .cornerRadius(8)
@@ -75,13 +74,14 @@ struct FinchNestView: View {
                 
                 // Saved for Later section
                 Text("    Saved for Later")
-                    .font(.custom("Didot Bold", size: 28))
+                    .font(.custom("Georgia", size: 20))
                     .bold()
                     .foregroundColor(.latteMilk)
                     .padding(.top, 8)
                 
                 // Book saved
                 Text("Book You Saved")
+                    .font(.custom("Avenir", size: 16))
                     .padding()
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .background(Color.latteMilk)
@@ -93,7 +93,7 @@ struct FinchNestView: View {
             .padding(.bottom, 49)
             
             Spacer()
-        }.background(Color.latteMilk)
+        }.background(Color("BackgroundColor"))
     }
 }
 

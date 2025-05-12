@@ -40,7 +40,7 @@ struct MoreInfoView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     Text("Help & Documentation")
-                        .font(.custom("Didot", size: 32))
+                        .font(.custom("Georgia", size: 30))
                         .bold()
                         .foregroundColor(textColor)
                         .padding(.top)
@@ -52,10 +52,12 @@ struct MoreInfoView: View {
                     
                     Group {
                         Text("🌿 What is Willow & Finch?")
-                            .font(.headline)
+                            .font(.custom("Georgia", size: 20))
+                            .bold()
                             .foregroundColor(textColor)
                         Text("Willow & Finch helps you store and read your books. This guide explains how to get started and make the most of your experience.")
                             .foregroundColor(textColor)
+                            .font(.custom("Avenir", size: 16))
                         
                         // TTS for the introduction
                         TTSButtonSection(for: "What is Willow & Finch? Willow & Finch helps you store and read your books. This guide explains how to get started and make the most of your experience.", viewModel: viewModel, isSpeaking: $isSpeakingWhatIs)
@@ -63,13 +65,15 @@ struct MoreInfoView: View {
                         
                         Group {
                             Text("🛠️ Getting Started")
-                                .font(.headline)
+                                .font(.custom("Georgia", size: 20))
                                 .foregroundColor(textColor)
                             Text("""
-1. Search for your book via search bar
-2. Utilize the recommendation page
-3. Check your saved books in "Finch Nest"
-""").foregroundColor(textColor)
+                                1. Search for your book via search bar
+                                2. Utilize the recommendation page
+                                3. Check your saved books in "Finch Nest"
+                                """)
+                                .foregroundColor(textColor)
+                                .font(.custom("Avenir", size: 16))
                             
                             // TTS for Getting Started
                             TTSButtonSection(for: "Getting Started 1. Search for your book via search bar 2. Utilize the recommendation page 3. Check your saved books in 'Finch Nest'", viewModel: viewModel, isSpeaking: $isSpeakingGettingStarted)
@@ -78,9 +82,10 @@ struct MoreInfoView: View {
                         
                         Group {
                             Text("❓ Frequently Asked Questions")
-                                .font(.headline)
+                                .font(.custom("Georgia", size: 20))
                                 .foregroundColor(textColor)
                             Text("**Q:** How do I get a book recommended?\n**A:** Recommendation Page -> Get Started\n\n**Q:** How to save a book for later?\n**A:** Click the save button")
+                                .font(.custom("Avenir", size: 16))
                                 .foregroundColor(textColor)
                             // TTS for FAQ
                             TTSButtonSection(for: "Frequently Asked Questions Q:How do I get a book recommended? A: Recommendation Page -> Get Started Q: How to save a book for later? A: Click the save button", viewModel: viewModel, isSpeaking: $isSpeakingFAQ)
@@ -89,9 +94,10 @@ struct MoreInfoView: View {
                         
                         Group {
                             Text("📞 Contact & Support")
-                                .font(.headline)
+                                .font(.custom("Georgia", size: 20))
                                 .foregroundColor(textColor)
                             Text("Need more help? Email us at support@willowandfinch.app (Email is not active)")
+                                .font(.custom("Avenir", size: 16))
                                 .foregroundColor(textColor)
                             // TTS for Contact
                             TTSButtonSection(for: "Contact & Support Need more help? Email us at support@willowandfinch.app (Email is not active)", viewModel: viewModel, isSpeaking: $isSpeakingContact)

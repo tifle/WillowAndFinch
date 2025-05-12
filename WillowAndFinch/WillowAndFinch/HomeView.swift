@@ -24,33 +24,33 @@ struct HomeView: View {
                     }
                     .padding(.top)
                     Text("Welcome to Willow & Finch")
-                        .font(.custom("Didot", size: 28))
-                    //                    .bold()
+                        .font(.custom("Georgia", size: 25))
+                        .foregroundColor(Color("TextColor"))
+                        .bold()
                         .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.bottom)
                     
                     // search bar
                     TextField("Search by book title", text: .constant(""))
-                        .font(.custom("Didot", size: 16))
+                        .font(.custom("Avenir", size: 16))
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .frame(width: 380)
                         .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.bottom)
                     
                     Text("Recommended")
-                        .font(.custom("Didot", size: 18))
+                        .font(.custom("Georgia", size: 18))
+                        .foregroundColor(Color("TextColor"))
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .bold()
                     ScrollView(.horizontal) {
-                        // show the top 5 recommended books
-                        //                    HStack(0..<5) { _ in BookDetailView(title: "Recommended Book")
-                        //                        
-                    //                    }
-                    } //end of scroll view
-            } //end of VStack
-                .background(Color.sageGreen.ignoresSafeArea(edges: .top))
-                .background(Color.latteMilk)
+                    }
+            }
+                .background(Color("BackgroundColor").ignoresSafeArea(edges: .top))
+                .background(Color("TabColor"))
 
                 
-        } //end of navigation view
+        }
     }
 }
 

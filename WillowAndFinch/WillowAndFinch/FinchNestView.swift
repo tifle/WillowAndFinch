@@ -20,7 +20,7 @@ struct FinchNestView: View {
             // Background color for entire content area
             VStack(spacing: 0) {
                 Color.sageGreen.frame(height: 110)
-                Color.cafeBrown
+                Color("BackgroundColor")
             }
             .edgesIgnoringSafeArea(.top)
             
@@ -30,7 +30,7 @@ struct FinchNestView: View {
                 Text("Your Nest")
                     .font(.custom("Georgia", size: 30))
                     .bold()
-                    .foregroundColor(.latteMilk)
+                    .foregroundColor(Color("BackgroundColor"))
                     .padding()
                     .padding(.top, -15)
 
@@ -42,7 +42,7 @@ struct FinchNestView: View {
 //                    .padding()
                     .font(.custom("Georgia", size: 20))
                     .bold()
-                    .foregroundColor(.latteMilk)
+                    .foregroundColor(Color("TextColor"))
                 
                 // Book links
                 VStack(alignment: .leading, spacing: 0) {
@@ -76,7 +76,7 @@ struct FinchNestView: View {
                 Text("    Saved for Later")
                     .font(.custom("Georgia", size: 20))
                     .bold()
-                    .foregroundColor(.latteMilk)
+                    .foregroundColor(Color("TextColor"))
                     .padding(.top, 8)
                 
                 // Book saved
@@ -93,7 +93,7 @@ struct FinchNestView: View {
             .padding(.bottom, 49)
             
             Spacer()
-        }.background(Color("BackgroundColor"))
+        }.background(Color("TabColor"))
     }
 }
 

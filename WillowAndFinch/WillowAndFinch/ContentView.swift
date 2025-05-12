@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ContentView: View {
     @State var selection = 1
-
     var body: some View {
         TabView (selection: $selection){
             HomeView()
@@ -38,10 +37,18 @@ struct ContentView: View {
                     Text("More Info")
                 }
                 .tag(4)
+            
+            ReadingView()
+                .tabItem{
+                    Image(systemName: "book.pages.fill")
+                    Text("Read")
+                }
+                .tag(5)
         }
     }
 }
 
 #Preview {
     ContentView()
+        .preferredColorScheme(.dark)
 }

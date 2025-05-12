@@ -15,7 +15,7 @@ struct CustomTextEditor: UIViewRepresentable {
     func makeUIView(context: Context) -> UITextView {
         let textView = UITextView()
         textView.text = text
-        textView.font = UIFont(name: "Didot", size: 25)
+        textView.font = UIFont(name: "Georgia", size: 25)
         textView.backgroundColor = .clear
         textView.layer.cornerRadius = 10
         textView.layer.borderColor = UIColor.gray.cgColor

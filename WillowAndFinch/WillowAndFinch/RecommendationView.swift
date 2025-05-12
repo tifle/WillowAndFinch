@@ -17,7 +17,7 @@ struct RecommendationView: View {
             
             // All page
             ZStack {
-                Color.sageGreen.ignoresSafeArea(edges: .top)
+                Color("BackgroundColor").ignoresSafeArea(edges: .top)
                 
                 // All view
                 VStack {
@@ -36,7 +36,8 @@ struct RecommendationView: View {
                     
                     // Prints out recommended text info
                     Text(recommendationText)
-                        .font(.custom("Didot", size: 28))
+                        .font(.custom("Avenir", size: 26))
+                        .foregroundColor(Color("TextColor"))
                         .padding()
                     
                     // Navigates to BookDetailView
@@ -46,7 +47,8 @@ struct RecommendationView: View {
                             label: {
                                 HStack {
                                     Text("Book Overview")
-                                        .foregroundColor(.black)
+                                        .foregroundColor(Color("TextColor"))
+                                        .font(.custom("Avenir", size: 26))
                                     Image(systemName: "chevron.right")
                                         .foregroundColor(.gray)
                                 }
@@ -74,7 +76,7 @@ struct RecommendationView: View {
                 } //end of .onChange
                 
             } //end of ZStack
-            .background(Color.latteMilk)
+            .background(Color("TabColor"))
         }
     }
 }

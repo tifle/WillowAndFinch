@@ -42,4 +42,6 @@ class TextToSpeechViewModel: ObservableObject {
             isSpeaking = false
         }
     }
+
+
 }

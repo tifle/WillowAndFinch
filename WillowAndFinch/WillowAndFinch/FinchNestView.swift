@@ -16,84 +16,86 @@ extension Color {
 
 struct FinchNestView: View {
     var body: some View {
-        ZStack(alignment: .top) {
-            // Background color for entire content area
-            VStack(spacing: 0) {
-                Color.sageGreen.frame(height: 110)
-                Color("BackgroundColor")
-            }
-            .edgesIgnoringSafeArea(.top)
-            
-            // Content
-            VStack(alignment: .leading, spacing: 20) {
-                // Title with background
-                Text("Your Nest")
-                    .font(.custom("Georgia", size: 30))
-                    .bold()
-                    .foregroundColor(Color("BackgroundColor"))
-                    .padding()
-                    .padding(.top, -15)
-
-                    .frame(maxWidth: .infinity,
-                           alignment: .center)
-                
-                // Currently Reading section
-                Text("    Currently Reading")
-//                    .padding()
-                    .font(.custom("Georgia", size: 20))
-                    .bold()
-                    .foregroundColor(Color("TextColor"))
-                
-                // Book links
-                VStack(alignment: .leading, spacing: 0) {
-                    NavigationLink(
-                        destination: ReadingView(),
-                        label: {
-                            HStack {
-                                Text("The Yellow Wallpaper")
-                                    .foregroundColor(.black)
-                                Spacer()
-                                Image(systemName: "chevron.right")
-                                    .foregroundColor(.gray)
-                            }
-                            .padding()
-                            .background(Color.latteMilk)
-                        }
-                    )
-                    
-                    Divider()
-                    
-                    Text("Another Current Book")
-                        .padding()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .font(.custom("Avenir", size: 16))
-                        .background(Color.latteMilk)
+        NavigationStack{
+            ZStack(alignment: .top) {
+                // Background color for entire content area
+                VStack(spacing: 0) {
+                    Color.sageGreen.frame(height: 110)
+                    Color("BackgroundColor")
                 }
-                .cornerRadius(8)
-                .padding(.horizontal)
+                .edgesIgnoringSafeArea(.top)
                 
-                // Saved for Later section
-                Text("    Saved for Later")
-                    .font(.custom("Georgia", size: 20))
-                    .bold()
-                    .foregroundColor(Color("TextColor"))
-                    .padding(.top, 8)
-                
-                // Book saved
-                Text("Book You Saved")
-                    .font(.custom("Avenir", size: 16))
-                    .padding()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(Color.latteMilk)
+                // Content
+                VStack(alignment: .leading, spacing: 20) {
+                    // Title with background
+                    Text("Your Nest")
+                        .font(.custom("Georgia", size: 30))
+                        .bold()
+                        .foregroundColor(Color("BackgroundColor"))
+                        .padding()
+                        .padding(.top, -15)
+                    
+                        .frame(maxWidth: .infinity,
+                               alignment: .center)
+                    
+                    // Currently Reading section
+                    Text("    Currently Reading")
+                    //                    .padding()
+                        .font(.custom("Georgia", size: 20))
+                        .bold()
+                        .foregroundColor(Color("TextColor"))
+                    
+                    // Book links
+                    VStack(alignment: .leading, spacing: 0) {
+                        NavigationLink(
+                            destination: ReadingView(),
+                            label: {
+                                HStack {
+                                    Text("The Yellow Wallpaper")
+                                        .foregroundColor(.black)
+                                    Spacer()
+                                    Image(systemName: "chevron.right")
+                                        .foregroundColor(.gray)
+                                }
+                                .padding()
+                                .background(Color.latteMilk)
+                            }
+                        )
+                        
+                        Divider()
+                        
+                        Text("Another Current Book")
+                            .padding()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .font(.custom("Avenir", size: 16))
+                            .background(Color.latteMilk)
+                    }
                     .cornerRadius(8)
                     .padding(.horizontal)
+                    
+                    // Saved for Later section
+                    Text("    Saved for Later")
+                        .font(.custom("Georgia", size: 20))
+                        .bold()
+                        .foregroundColor(Color("TextColor"))
+                        .padding(.top, 8)
+                    
+                    // Book saved
+                    Text("Book You Saved")
+                        .font(.custom("Avenir", size: 16))
+                        .padding()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(Color.latteMilk)
+                        .cornerRadius(8)
+                        .padding(.horizontal)
+                    
+                    Spacer()
+                }
+                .padding(.bottom, 49)
                 
                 Spacer()
-            }
-            .padding(.bottom, 49)
-            
-            Spacer()
-        }.background(Color("TabColor"))
+            }.background(Color("TabColor"))
+        }
     }
 }
 

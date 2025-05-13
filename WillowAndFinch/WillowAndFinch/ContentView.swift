@@ -44,12 +44,12 @@ struct ContentView: View {
                     Text("Read")
                 }
                 .tag(5)
-            BookDetailView()
-                .tabItem{
-                    Image(systemName: "book.pages.fill")
-                    Text("Read")
-                }
-                .tag(6)
+//            BookDetailView()
+//                .tabItem{
+//                    Image(systemName: "book.pages.fill")
+//                    Text("Read")
+//                }
+//                .tag(6)
         }
     }
 }

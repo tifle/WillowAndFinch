@@ -43,6 +43,8 @@ struct HomeView: View {
                         .foregroundColor(Color("TextColor"))
                         .frame(maxWidth: .infinity, alignment: .center)
                         .bold()
+                    
+                    //Add lots of HStacks lol
                     ScrollView(.horizontal) {
                     }
             }

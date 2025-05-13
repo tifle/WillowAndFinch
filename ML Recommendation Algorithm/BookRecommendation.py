@@ -57,43 +57,45 @@ pickle.dump(pt, open('pt.pkl', 'wb'))
 pickle.dump(book, open('book.pkl', 'wb'))
 pickle.dump(similarity_scores, open('similarity_scores.pkl', 'wb'))
 
+# results = recommendation("Apple")
+# print(results)
 
 
-results = recommendation("Apple")
-print(results)
+import json
+
+# Book titles list
+book_titles = list(pt.index)
+
+# Metadata mapping
+book_metadata = {
+    title: {
+        "Book-Author": book[book['Book-Title'] == title]['Book-Author'].values[0],
+        "Year-Of-Publication": int(book[book['Book-Title'] == title]['Year-Of-Publication'].values[0]),
+        "Publisher": book[book['Book-Title'] == title]['Publisher'].values[0],
+        "Image-URL-L": book[book['Book-Title'] == title]['Image-URL-L'].values[0]
+    }
+    for title in pt.index
+    if not book[book['Book-Title'] == title].empty
+}
 
 
+# Convert similarity scores (numpy array) to list of lists
+similarity_list = similarity_scores.tolist()
 
+# Bundle data into one dictionary
+data = {
+    "book_titles": book_titles,
+    "book_metadata": book_metadata,
+    "similarity_scores": similarity_list
+}
+
+# Save to JSON
+with open("book_data.json", "w") as f:
+    json.dump(data, f)
 
 
 
 # import json
-
-# # Book titles list
-# book_titles = list(pt.index)
-
-# # Author mapping
-# book_authors = {title: book[book['Book-Title'] == title]['Book-Author'].values[0]
-#                 for title in pt.index}
-
-# # Convert similarity scores (numpy array) to list of lists
-# similarity_list = similarity_scores.tolist()
-
-# # Bundle data into one dictionary
-# data = {
-#     "book_titles": book_titles,
-#     "book_authors": book_authors,
-#     "similarity_scores": similarity_list
-# }
-
-# # Save to JSON
-# with open("book_data.json", "w") as f:
-#     json.dump(data, f)
-
-
-
-
-import json
 import html
 
 # Load your JSON file

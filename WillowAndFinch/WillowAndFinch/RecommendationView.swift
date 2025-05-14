@@ -11,8 +11,9 @@ struct RecommendationView: View {
     @State private var recommendationText: String = "Loading recommendation..."
     @State var input = "Enter Book Title"
     @State private var showDetails = false
-    @State private var bookRecommendation: Book? = nil // Store the recommendation details
+    @State private var bookRecommendation: (Book?, String?) = (nil, nil)
 
+    
     var body: some View {
         if #available(iOS 17.0, *) {
             
@@ -23,6 +24,12 @@ struct RecommendationView: View {
                     
                     // All view
                     VStack {
+                        
+                        Text("Enter the title of your favorite book!")
+                            .font(.custom("Avenir", size: 30))
+                            .bold()
+                            .foregroundColor(Color("TextColor"))
+                            .padding()
                         
                         //TextEditor
                         ZStack {
@@ -43,18 +50,18 @@ struct RecommendationView: View {
                             .padding()
                         
                         // Navigates to BookDetailView
-//                        if showDetails, let recommendation = bookRecommendation {
-                        if showDetails, let recommendation = bookRecommendation{
+                        //                        if showDetails, let recommendation = bookRecommendation {
+                        if showDetails,
+                           let recommendation = bookRecommendation.0{
                             
-                            // Print when the recommendation is ready
-                            
+                            // Appears when the recommendation is ready
                             NavigationLink(
                                 destination: BookDetailView(book: Book(
-                                        title: recommendation.title,
-                                        author: recommendation.author,
-                                        publication_year: recommendation.publication_year,
-                                        publisher: recommendation.publisher,
-                                        imageURL: recommendation.imageURL)),
+                                    title: recommendation.title,
+                                    author: recommendation.author,
+                                    publication_year: recommendation.publication_year,
+                                    publisher: recommendation.publisher,
+                                    imageURL: recommendation.imageURL)),
                                 label: {
                                     HStack {
                                         Text("Book Overview")
@@ -72,27 +79,29 @@ struct RecommendationView: View {
                         }
                         
                     } //end of VStack
-                    
-                    // ML algorithm implemented
-                    .onChange(of: input) {
-                        if let bookData = BookRecommendation.loadBookData(){
-                            bookRecommendation = BookRecommendation.recommend(bookTitle: input, from: bookData)
-//                            print("Before state change: \(showDetails)")
-                            showDetails = true
-//                            print("After state change: \(showDetails)")
-                            
-                            recommendationText = "Recommended Title: \(bookRecommendation?.title ?? "")\nAuthor: \(bookRecommendation?.author ?? "")"
-                        } else {
-                            recommendationText = "No recommendation available"
-                            showDetails = false
-                        }
-                    } //end of .onChange
-                    
-                } //end of ZStack
-                .background(Color("TabColor"))
+                        // ML algorithm implemented
+                        .onChange(of: input) {
+                            if let bookData = BookRecommendation.loadBookData(){
+                                bookRecommendation = BookRecommendation.recommend(bookTitle: input, from: bookData)
+                                showDetails = true
+
+                                let (rec, message) = bookRecommendation
+
+                                if rec == nil {
+                                    recommendationText = message!
+                                } else {
+                                    recommendationText = "Recommended Title: \(rec?.title ?? "")\nAuthor: \(rec?.author ?? "")"
+                                }
+                            } else {
+                                recommendationText = "No recommendation available"
+                                showDetails = false
+                            }
+                        } //end of .onChange
+                    } //end of ZStack
+                    .background(Color("TabColor"))
+                }
             }
         }
-    }
 }
 
 #Preview {

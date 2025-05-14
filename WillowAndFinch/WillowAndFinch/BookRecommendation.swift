@@ -7,46 +7,11 @@
 
 import Foundation
 
-//class BookRecommendation {
-//    static func loadBookData() -> BookData? {
-//        guard let url = Bundle.main.url(forResource: "book_data_cleaned", withExtension: "json"),
-//              let data = try? Data(contentsOf: url) else {
-//            print("Could not find book_data_cleaned.json.")
-//            return nil
-//        }
-//
-//        let decoder = JSONDecoder()
-//        do {
-//            return try decoder.decode(BookData.self, from: data)
-//        } catch {
-//            print("Error decoding book data: \(error)")
-//            return nil
-//        }
-//    }
-//
-//    static func recommend(bookTitle: String, from data: BookData) -> String? {
-//        guard let index = data.book_titles.firstIndex(of: bookTitle) else {
-//            return "Book '\(bookTitle)' not found in dataset."
-//        }
-//
-//        let similarities = data.similarity_scores[index]
-//        let indexedSimilarities = similarities.enumerated().sorted { $0.element > $1.element }
-//        let top = indexedSimilarities.dropFirst().prefix(5)
-//
-//        if let selected = top.randomElement() {
-//            let recommendedTitle = data.book_titles[selected.offset]
-//            let author = data.book_authors[recommendedTitle] ?? "Unknown"
-//            return "Title: \(recommendedTitle)\nAuthor: \(author)"
-//        }
-//
-//        return nil
-//    }
-//}
-//
-
-import Foundation
-
-class BookRecommendation {
+class BookRecommendation: ObservableObject {
+    static let shared = BookRecommendation()
+    @Published var lastIndexedSimilarities: ArraySlice<(offset: Int, element: Double)> = []
+    @Published var recommendedBooks: [Book] = []
+    
     static func loadBookData() -> BookData? {
         guard let url = Bundle.main.url(forResource: "book_data_cleaned", withExtension: "json"),
               let data = try? Data(contentsOf: url) else {
@@ -64,34 +29,62 @@ class BookRecommendation {
         
     }
 
-    static func recommend(bookTitle: String, from data: BookData) -> Book? {
+    static func recommend(bookTitle: String, from data: BookData) -> (Book?, String?) {
         guard let index = data.book_titles.firstIndex(of: bookTitle) else {
-            print("Book '\(bookTitle)' not found in dataset.")
-            return nil
+//            print("Book '\(bookTitle)' not found in dataset.")
+            return (nil, "Book '\(bookTitle)' not found in dataset.")
         }
+        
+        
+        BookRecommendation.shared.recommendedlist(bookTitle: bookTitle, from: data)
 
         let similarities = data.similarity_scores[index]
         let indexedSimilarities = similarities.enumerated().sorted { $0.element > $1.element }
-        let top = indexedSimilarities.dropFirst().prefix(5)
-        
+        let top = indexedSimilarities.dropFirst().prefix(9)
 
         if let selected = top.randomElement() {
             let recommendedTitle = data.book_titles[selected.offset]
             guard let metadata = data.book_metadata[recommendedTitle] else {
-                        return nil
+                return (nil, nil)
             }
-//            let author = data.book_authors[recommendedTitle] ?? "Unknown"
-//            let year = books[recommendedTitle]?["year"] ?? "Unknown"
-            return Book(
+            return (Book(
                 title: recommendedTitle,
                 author: metadata.BookAuthor,
                 publication_year: metadata.YearOfPublication,
                 publisher: metadata.Publisher,
                 imageURL: metadata.ImageURL
-            )
+            ), nil)
         }
 
-        return nil
+        return (nil, nil)
+    }
+    
+    func recommendedlist(bookTitle: String, from data: BookData) -> [Book]{
+        guard let index = data.book_titles.firstIndex(of: bookTitle) else {
+            return []
+        }
+                
+        let similarities = data.similarity_scores[index]
+        let indexedSimilarities = similarities.enumerated().sorted { $0.element > $1.element }
+        let top = indexedSimilarities.dropFirst().prefix(9)
+        self.lastIndexedSimilarities = top
+        
+        for selected in top {
+            let recommendedTitle = data.book_titles[selected.offset]
+            if let metadata = data.book_metadata[recommendedTitle] {
+                let book = Book(
+                    title: recommendedTitle,
+                    author: metadata.BookAuthor,
+                    publication_year: metadata.YearOfPublication,
+                    publisher: metadata.Publisher,
+                    imageURL: metadata.ImageURL
+                )
+                recommendedBooks.append(book)
+            }
+        }
+        
+//        print(recommendedBooks[1])
+        return recommendedBooks
     }
     
 }

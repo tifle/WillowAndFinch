@@ -9,6 +9,13 @@ import SwiftUI
 
 struct BookDetailView: View {
     let book: Book
+    @State private var navigateToReading = false
+    @State private var navigateToFinchNest = false
+    @State private var shouldNavigate = false
+    @State private var showAddedMessage = false
+    @State private var showAlreadySavedAlert = false
+
+    @EnvironmentObject var viewModel: FinchNestViewModel
     
     var body: some View {
         NavigationStack {
@@ -58,25 +65,61 @@ struct BookDetailView: View {
                     //
                     //                    .padding(10)
                     //
-                    VStack {
-                        NavigationLink(destination: ReadingView()) {
-                            Text("READ NOW")
+                    VStack(spacing: 5) {
+                        Button(action: {
+                                if book.textAvailable {
+                                    navigateToReading = true
+                                }
+                            }) {
+                                Text(book.textAvailable ? "READ NOW" : "TEXT UNAVAILABLE")
+                                    .frame(width: 200, height: 40)
+                                    .font(.custom("Avenir", size: 16))
+                                    .bold()
+                                    .background(book.textAvailable ? Color("Grass") : Color.gray)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(12)
+                            }
+
+                            NavigationLink(
+                                destination: ReadingView(),
+                                isActive: $navigateToReading,
+                                label: { EmptyView() }
+                            )
+                            .hidden()
+
+                        if shouldNavigate {
+                            NavigationLink(destination: FinchNestView(), isActive: $shouldNavigate) {
+                                EmptyView()
+                            }
+                        }
+
+                        Button(action: {
+                            if(viewModel.isBookSaved(book)){
+                                showAlreadySavedAlert = true
+                            }else{
+                                showAddedMessage = true
+                                viewModel.addSaved(book)
+                                shouldNavigate = true
+                            }
+                        }) {
+                            Text(viewModel.isBookSaved(book) ? "Saved" : "READ LATER")
+                                .font(.custom("Avenir", size: 16))
                                 .frame(width: 150, height: 45)
-                                .background(Color.blue)
-                                .foregroundColor(.white)
+                                .background(viewModel.isBookSaved(book) ? Color.gray.opacity(0.5) : Color("MatchLatte"))
+                                .foregroundColor(viewModel.isBookSaved(book) ? .black : .white)
                                 .cornerRadius(12)
+                        }
+                        .alert(isPresented: $showAddedMessage) {
+                            Alert(title: Text("Book Added"), message: Text("This book was added to your reading list."), dismissButton: .default(Text("OK")))
+                        }
+                        .alert(isPresented: $showAlreadySavedAlert) {
+                            Alert(
+                                title: Text("Book Already Added"),
+                                message: Text("This book is already in your reading list."),
+                                dismissButton: .default(Text("OK"))
+                            )
                         }
                         
-                            
-                        Button(action: {
-                            print("")
-                        }) {
-                            Text("READ LATER")
-                                .frame(width: 150, height: 45)
-                                .background(Color.gray)
-                                .foregroundColor(.white)
-                                .cornerRadius(12)
-                        }
                     }
                     .padding(10)
                     
@@ -91,7 +134,9 @@ struct BookDetailView: View {
                         Spacer(minLength: 30)
                         //                    Text("Potentially Summary?")
                         Text("Publisher: \(book.publisher)")
+                            .font(.custom("Avenir", size: 14))
                         Text("Publication Year: \(String(book.publication_year))")
+                            .font(.custom("Avenir", size: 14))
                         
                     }
                 }

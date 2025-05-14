@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct WillowAndFinchApp: App {
-    
+
     init() {
         let tabBarAppearance = UITabBarAppearance()
         tabBarAppearance.configureWithOpaqueBackground()
@@ -41,10 +41,12 @@ struct WillowAndFinchApp: App {
     }
 
 
+    @StateObject var viewModel = FinchNestViewModel()
 
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(viewModel)
         }
     }
 }

@@ -17,33 +17,33 @@ struct ContentView: View {
                     Text("Home")
                 }
                 .tag(1)
-//            RecommendationView()
-//                .tabItem {
-//                    Image (systemName: "sparkles")
-//                    Text("For You")
-//                }
-//                .tag(2)
+            SearchView()
+                .tabItem {
+                    Image (systemName: "sparkles")
+                    Text("Search")
+                }
+                .tag(2)
             
             FinchNestView()
                 .tabItem {
                     Image (systemName: "books.vertical")
                     Text("Finch Nest")
                 }
-                .tag(2)
+                .tag(3)
             
             MoreInfoView()
                 .tabItem{
                     Image(systemName: "info.circle")
                     Text("More Info")
                 }
-                .tag(3)
+                .tag(4)
             
-//            ReadingView()
-//                .tabItem{
-//                    Image(systemName: "book.pages.fill")
-//                    Text("Read")
-//                }
-//                .tag(5)
+            ReadingView()
+                .tabItem{
+                    Image(systemName: "book.pages.fill")
+                    Text("Read")
+                }
+                .tag(5)
 //            BookDetailView()
 //                .tabItem{
 //                    Image(systemName: "book.pages.fill")

@@ -724,22 +724,22 @@ struct GuideOverlay: View {
                                 if guideStep == 0 {
                                     Circle()
                                         .frame(width: 50, height: 50)
-                                        .offset(x: -UIScreen.main.bounds.width / 2 + 34, y: -320)
+                                        .offset(x: -UIScreen.main.bounds.width / 2 + 34, y: -302)
                                         .blendMode(.destinationOut)
                                 } else if guideStep == 1 {
                                     Circle()
                                         .frame(width: 50, height: 50)
-                                        .offset(x: -UIScreen.main.bounds.width / 2 + 82, y: -320)
+                                        .offset(x: -UIScreen.main.bounds.width / 2 + 82, y: -302)
                                         .blendMode(.destinationOut)
                                 } else if guideStep == 2 {
                                     Circle()
                                         .frame(width: 50, height: 50)
-                                        .offset(x: -UIScreen.main.bounds.width / 2 + 323, y: -320)
+                                        .offset(x: -UIScreen.main.bounds.width / 2 + 323, y: -302)
                                         .blendMode(.destinationOut)
                                 } else if guideStep == 3 {
                                     Circle()
                                         .frame(width: 50, height: 50)
-                                        .offset(x: -UIScreen.main.bounds.width / 2 + 363, y: -320)
+                                        .offset(x: -UIScreen.main.bounds.width / 2 + 363, y: -302)
                                         .blendMode(.destinationOut)
                                 }
                             }
@@ -822,6 +822,7 @@ struct TTSButtonView: View {
         } label: {
             Image(systemName: isSpeaking ? "speaker.slash.fill" : "speaker.wave.2.fill")
                 .font(.headline)
+                .foregroundColor($isSpeaking.wrappedValue ? .red : .black)
         }
     }
 }

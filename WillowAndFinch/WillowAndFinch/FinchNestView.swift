@@ -15,8 +15,30 @@ extension Color {
 }
 
 struct FinchNestView: View {
+    @EnvironmentObject var viewModel: FinchNestViewModel
+
+    // Separate function to create the view for each book
+    private func createSavedBookView(for book: Book) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(book.title)
+                .font(.custom("Georgia", size: 16))
+                .foregroundColor(Color("TextColor"))
+//                .bold()
+                .padding(.bottom, 2)
+            
+            Text("by \(book.author)")
+                .font(.custom("Avenir", size: 14))
+                .foregroundColor(.gray)
+        }
+        .padding()
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Color.latteMilk)
+        .cornerRadius(8)
+        .padding(.horizontal)
+    }
+
     var body: some View {
-        NavigationStack{
+        NavigationStack {
             ZStack(alignment: .top) {
                 // Background color for entire content area
                 VStack(spacing: 0) {
@@ -24,7 +46,7 @@ struct FinchNestView: View {
                     Color("BackgroundColor")
                 }
                 .edgesIgnoringSafeArea(.top)
-                
+
                 // Content
                 VStack(alignment: .leading, spacing: 20) {
                     // Title with background
@@ -34,25 +56,22 @@ struct FinchNestView: View {
                         .foregroundColor(Color("BackgroundColor"))
                         .padding()
                         .padding(.top, -15)
-                    
-                        .frame(maxWidth: .infinity,
-                               alignment: .center)
-                    
+
                     // Currently Reading section
                     Text("    Currently Reading")
-                    //                    .padding()
                         .font(.custom("Georgia", size: 20))
                         .bold()
                         .foregroundColor(Color("TextColor"))
-                    
-                    // Book links
+
+                    // Book links (example)
                     VStack(alignment: .leading, spacing: 0) {
                         NavigationLink(
                             destination: ReadingView(),
                             label: {
                                 HStack {
                                     Text("The Yellow Wallpaper")
-                                        .foregroundColor(.black)
+                                        .font(.custom("Georgia", size: 16))
+                                        .foregroundColor(Color("TextColor"))
                                     Spacer()
                                     Image(systemName: "chevron.right")
                                         .foregroundColor(.gray)
@@ -61,18 +80,12 @@ struct FinchNestView: View {
                                 .background(Color.latteMilk)
                             }
                         )
-                        
+
                         Divider()
-                        
-                        Text("Another Current Book")
-                            .padding()
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .font(.custom("Avenir", size: 16))
-                            .background(Color.latteMilk)
                     }
                     .cornerRadius(8)
                     .padding(.horizontal)
-                    
+
                     // Saved for Later section
                     Text("    Saved for Later")
                         .font(.custom("Georgia", size: 20))
@@ -80,25 +93,45 @@ struct FinchNestView: View {
                         .foregroundColor(Color("TextColor"))
                         .padding(.top, 8)
                     
-                    // Book saved
-                    Text("Book You Saved")
-                        .font(.custom("Avenir", size: 16))
-                        .padding()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color.latteMilk)
-                        .cornerRadius(8)
-                        .padding(.horizontal)
-                    
+
+                    // Dynamic list of saved books
+                    ForEach(viewModel.savedBooks) { book in
+                        NavigationLink(destination: BookDetailView(book: book)) {
+                            HStack {
+                                createSavedBookView(for: book)
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(.gray)
+                            }
+                            .padding()
+                            .background(Color("latteMilk"))
+                            .cornerRadius(10)
+                        }
+                    }
+
                     Spacer()
+                    // Logo / Home Page
+                    HStack {
+                        Spacer()
+                        Image("nest")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 100)
+                        Spacer()
+                    }
+                    .padding(.bottom)
+                    .padding(.leading)
                 }
-                .padding(.bottom, 49)
-                
+                .padding(.bottom, 25)
+
                 Spacer()
-            }.background(Color("TabColor"))
+            }
+            .background(Color("TabColor"))
         }
     }
 }
 
 #Preview {
     FinchNestView()
+        .environmentObject(FinchNestViewModel()) // Add environment object in the preview
 }

@@ -11,7 +11,7 @@ struct HomeView: View {
     @ObservedObject var recommender = BookRecommendation.shared
     @State private var refreshID = UUID()
     
-    // This struct will help manage book cover loading
+    // helps with book cover loading
     struct BookCoverView: View {
         let imageURL: String
         let title: String
@@ -19,7 +19,7 @@ struct HomeView: View {
         
         var body: some View {
             VStack {
-                // Use URLCache to improve image loading
+                // URLCache improves image loading
                 if let url = URL(string: imageURL) {
                     CachedAsyncImage(url: url) { phase in
                         switch phase {
@@ -77,7 +77,7 @@ struct HomeView: View {
             }
             .padding(.horizontal, 4)
             .onAppear {
-                // Mark that this view has appeared to show error messages if needed
+                // mark that view has appeared to show error messages if needed
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     hasAppeared = true
                 }
@@ -85,7 +85,7 @@ struct HomeView: View {
         }
     }
     
-    // Create a custom CachedAsyncImage that handles caching better
+    // custom CachedAsyncImage for handling caching better
     struct CachedAsyncImage<Content: View>: View {
         private let url: URL
         private let content: (AsyncImagePhase) -> Content
@@ -99,7 +99,7 @@ struct HomeView: View {
             AsyncImage(url: url, scale: 1.0, transaction: Transaction(animation: .default)) { phase in
                 content(phase)
             }
-            // Use these key modifiers to ensure proper loading
+            // key modifiers ensure proper loading
             .id(url.absoluteString)
         }
     }
@@ -107,8 +107,10 @@ struct HomeView: View {
     var body: some View {
         // Navigation View
         NavigationView {
+            
             // Vertical Stack
             VStack(alignment: .leading) {
+                
                 // Logo / Home Page
                 HStack {
                     Spacer()
@@ -119,6 +121,8 @@ struct HomeView: View {
                     Spacer()
                 }
                 .padding(.top)
+                
+                //title
                 Text("Welcome to Willow & Finch")
                     .font(.custom("Georgia", size: 25))
                     .foregroundColor(Color("TextColor"))
@@ -126,6 +130,7 @@ struct HomeView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.bottom)
                 
+                //recommended section
                 ScrollView(.vertical){
                     Text("Recommended")
                         .font(.custom("Georgia", size: 20))
@@ -152,7 +157,7 @@ struct HomeView: View {
                             }
                             .padding(.horizontal)
                         }
-                        .id(refreshID) // Force redraw with refreshID
+                        .id(refreshID) // force redraw with refreshID
                         
                         NavigationLink(destination: RecommendationView()) {
                             Text("Generate more")
@@ -163,16 +168,9 @@ struct HomeView: View {
                                 .frame(maxWidth: .infinity, alignment: .center)
                         }
                         .padding(.vertical)
-                        
-//                        // Debug button to force refresh
-//                        Button("Refresh Covers") {
-//                            refreshID = UUID() // Generate new UUID to force view update
-//                        }
-//                        .font(.caption)
-//                        .padding(.horizontal)
-//                        .frame(maxWidth: .infinity, alignment: .center)
-                    }
+                    } //end of scroll view
                     
+                    // new releases section
                     Text("New Releases")
                         .font(.custom("Georgia", size: 20))
                         .foregroundColor(Color("TextColor"))
@@ -180,6 +178,7 @@ struct HomeView: View {
                         .bold()
                         .padding(.top, 30)
                     
+                    // book scrollable list
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 12) {
                             Image("WingsOfStarlight")
@@ -231,6 +230,7 @@ struct HomeView: View {
                         .padding(.horizontal)
                     }
                     
+                    // staff choice section
                     Text("Staff's Choice")
                         .font(.custom("Georgia", size: 20))
                         .foregroundColor(Color("TextColor"))
@@ -238,6 +238,7 @@ struct HomeView: View {
                         .bold()
                         .padding(.top, 30)
                     
+                    // cover scrollable list
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 12) {
                             Image("TheWager")
@@ -293,7 +294,7 @@ struct HomeView: View {
             .background(Color("BackgroundColor").ignoresSafeArea(edges: .top))
             .background(Color("TabColor"))
             .onAppear {
-                // Force refresh when view appears
+                // force refresh when view appears
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     refreshID = UUID()
                 }
@@ -302,7 +303,6 @@ struct HomeView: View {
     }
 }
 
-// Preview provider
 #Preview {
     HomeView()
         .environmentObject(FinchNestViewModel())

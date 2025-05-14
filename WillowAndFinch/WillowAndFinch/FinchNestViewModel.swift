@@ -9,9 +9,9 @@ import Foundation
 import SwiftUI
 
 class FinchNestViewModel: ObservableObject {
-    @Published var savedBooks: [Book] = [] // This holds the list of saved books
+    @Published var savedBooks: [Book] = [] // holds the list of saved books
         
-    // Function to add a book to the savedBooks list
+    // function to add a book to the savedBooks list
     func addSaved(_ book: Book) {
         savedBooks.append(book)
     }

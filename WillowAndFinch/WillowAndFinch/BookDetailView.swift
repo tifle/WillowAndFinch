@@ -20,16 +20,17 @@ struct BookDetailView: View {
     var body: some View {
         NavigationStack {
             ZStack{
+                // background colors
                 Color.latteMilk.ignoresSafeArea(edges: .bottom)
                 Color.warmBeige.ignoresSafeArea(edges: .top)
-                
-                
+
+                // contains cover, buttons, and info
                 VStack{
+                    
+                    //converts URL to actual cover
                     if let url = URL(string: book.imageURL){
-                        
                         AsyncImage(url: url) { phase in
                             switch phase {
-                                
                             case .empty:
                                 ProgressView()
                                     .frame(width: 400, height: 300)
@@ -57,15 +58,9 @@ struct BookDetailView: View {
                         .padding(10)
                         .padding(.top)
                     }
-                    //                Image("DefaultCover")
-                    //                    .resizable()
-                    //                    .scaledToFit()
-                    //                    .clipShape(RoundedRectangle(cornerRadius: 25))
-                    //                    .frame(width: 400)
-                    //
-                    //                    .padding(10)
-                    //
+
                     VStack(spacing: 5) {
+                        // text available / unavailable button
                         Button(action: {
                                 if book.textAvailable {
                                     navigateToReading = true
@@ -92,7 +87,8 @@ struct BookDetailView: View {
                                 EmptyView()
                             }
                         }
-
+                        
+                        // read later / already saved button
                         Button(action: {
                             if(viewModel.isBookSaved(book)){
                                 showAlreadySavedAlert = true
@@ -123,7 +119,7 @@ struct BookDetailView: View {
                     }
                     .padding(10)
                     
-                    
+                    // shows book info -> author, title, publisher, publication year
                     ScrollView{
                         Text(book.title)
                             .font(.custom("Georgia", size: 25))
@@ -145,14 +141,9 @@ struct BookDetailView: View {
     }
 }
 
-//
-//#Preview {
-//    BookDetailView(book: Book(title: "1984", author: "George Orwell", publication_year: 1990, publisher: "Signet Book",  imageURL: "http://images.amazon.com/images/P/0451524934.01.LZZZZZZZ.jpg"))
-//}
-
-// Uncomment and use this preview instead
+// uncomment and use this preview instead
 #Preview {
-    // Create a sample book for preview
+    // book sample
     let sampleBook = Book(
         title: "1984",
         author: "George Orwell",
@@ -161,10 +152,7 @@ struct BookDetailView: View {
         imageURL: "http://images.amazon.com/images/P/0451524934.01.LZZZZZZZ.jpg"
     )
     
-    // Create a FinchNestViewModel instance for preview
     let viewModel = FinchNestViewModel()
-    
-    // Return the view with the required environment object
     return BookDetailView(book: sampleBook)
         .environmentObject(viewModel)
 }

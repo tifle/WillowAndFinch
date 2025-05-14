@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// FOR BACKGROUND AND FOREGROUND
 extension Color {
     static let sageGreen = Color(red: 0.53, green: 0.57, blue: 0.40)
     static let cafeBrown = Color(red: 0.42, green: 0.35, blue: 0.28)
@@ -17,13 +18,12 @@ extension Color {
 struct FinchNestView: View {
     @EnvironmentObject var viewModel: FinchNestViewModel
 
-    // Separate function to create the view for each book
+    // creates view per book
     private func createSavedBookView(for book: Book) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(book.title)
                 .font(.custom("Georgia", size: 16))
                 .foregroundColor(Color("TextColor"))
-//                .bold()
                 .padding(.bottom, 2)
             
             Text("by \(book.author)")
@@ -40,16 +40,16 @@ struct FinchNestView: View {
     var body: some View {
         NavigationStack {
             ZStack(alignment: .top) {
-                // Background color for entire content area
+                // background color for content area
                 VStack(spacing: 0) {
                     Color.sageGreen.frame(height: 110)
                     Color("BackgroundColor")
                 }
                 .edgesIgnoringSafeArea(.top)
 
-                // Content
+                // CONTENT
                 VStack(alignment: .leading, spacing: 20) {
-                    // Title with background
+                    // TITLE W/ BACKGROUND
                     Text("Your Nest")
                         .font(.custom("Georgia", size: 30))
                         .bold()
@@ -57,13 +57,13 @@ struct FinchNestView: View {
                         .padding()
                         .padding(.top, -15)
 
-                    // Currently Reading section
+                    // CURRENTLY READING section
                     Text("    Currently Reading")
                         .font(.custom("Georgia", size: 20))
                         .bold()
                         .foregroundColor(Color("TextColor"))
 
-                    // Book links (example)
+                    // BOOK LINKS (example)
                     VStack(alignment: .leading, spacing: 0) {
                         NavigationLink(
                             destination: ReadingView(),
@@ -86,7 +86,7 @@ struct FinchNestView: View {
                     .cornerRadius(8)
                     .padding(.horizontal)
 
-                    // Saved for Later section
+                    // SAVED FOR LATER section
                     Text("    Saved for Later")
                         .font(.custom("Georgia", size: 20))
                         .bold()
@@ -94,7 +94,7 @@ struct FinchNestView: View {
                         .padding(.top, 8)
                     
 
-                    // Dynamic list of saved books
+                    // dynamic list of saved books
                     ForEach(viewModel.savedBooks) { book in
                         NavigationLink(destination: BookDetailView(book: book)) {
                             HStack {

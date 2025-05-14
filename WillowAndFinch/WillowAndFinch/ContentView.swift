@@ -39,19 +39,6 @@ struct ContentView: View {
                     Text("More Info")
                 }
                 .tag(4)
-            
-//            ReadingView()
-//                .tabItem{
-//                    Image(systemName: "book.pages.fill")
-//                    Text("Read")
-//                }
-//                .tag(5)
-//            BookDetailView()
-//                .tabItem{
-//                    Image(systemName: "book.pages.fill")
-//                    Text("Read")
-//                }
-//                .tag(6)
         }
         .environmentObject(finchNestViewModel)
     }
@@ -60,5 +47,4 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .environmentObject(FinchNestViewModel())
-//        .preferredColorScheme(.dark)
 }

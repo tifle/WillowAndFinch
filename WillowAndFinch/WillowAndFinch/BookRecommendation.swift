@@ -12,6 +12,7 @@ class BookRecommendation: ObservableObject {
     @Published var lastIndexedSimilarities: ArraySlice<(offset: Int, element: Double)> = []
     @Published var recommendedBooks: [Book] = []
     
+    //checks for JSON file to decode
     static func loadBookData() -> BookData? {
         guard let url = Bundle.main.url(forResource: "book_data_cleaned", withExtension: "json"),
               let data = try? Data(contentsOf: url) else {
@@ -29,13 +30,13 @@ class BookRecommendation: ObservableObject {
         
     }
 
+    // function called by recommendationview
     static func recommend(bookTitle: String, from data: BookData) -> (Book?, String?) {
         guard let index = data.book_titles.firstIndex(of: bookTitle) else {
-//            print("Book '\(bookTitle)' not found in dataset.")
             return (nil, "Book '\(bookTitle)' not found in dataset.")
         }
         
-        
+        //for home page
         BookRecommendation.shared.recommendedlist(bookTitle: bookTitle, from: data)
 
         let similarities = data.similarity_scores[index]
@@ -55,10 +56,10 @@ class BookRecommendation: ObservableObject {
                 imageURL: metadata.ImageURL
             ), nil)
         }
-
         return (nil, nil)
     }
     
+    // used by home page
     func recommendedlist(bookTitle: String, from data: BookData) -> [Book]{
         guard let index = data.book_titles.firstIndex(of: bookTitle) else {
             return []
@@ -82,8 +83,6 @@ class BookRecommendation: ObservableObject {
                 recommendedBooks.append(book)
             }
         }
-        
-//        print(recommendedBooks[1])
         return recommendedBooks
     }
     

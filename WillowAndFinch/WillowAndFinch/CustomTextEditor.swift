@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-// Text Editor Custom UI
+
 struct CustomTextEditor: UIViewRepresentable {
     @Binding var text: String
     
@@ -41,9 +41,9 @@ struct CustomTextEditor: UIViewRepresentable {
         init(text: Binding<String>) {
             self.text = text
         }
-
+        
+        // updates text when the text view changes
         func textViewDidChange(_ textView: UITextView) {
-            // Updates text when the text view changes
             text.wrappedValue = textView.text
         }
     }

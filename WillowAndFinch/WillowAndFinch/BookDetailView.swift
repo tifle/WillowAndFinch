@@ -146,6 +146,25 @@ struct BookDetailView: View {
 }
 
 //
+//#Preview {
+//    BookDetailView(book: Book(title: "1984", author: "George Orwell", publication_year: 1990, publisher: "Signet Book",  imageURL: "http://images.amazon.com/images/P/0451524934.01.LZZZZZZZ.jpg"))
+//}
+
+// Uncomment and use this preview instead
 #Preview {
-    BookDetailView(book: Book(title: "1984", author: "George Orwell", publication_year: 1990, publisher: "Signet Book",  imageURL: "http://images.amazon.com/images/P/0451524934.01.LZZZZZZZ.jpg"))
+    // Create a sample book for preview
+    let sampleBook = Book(
+        title: "1984",
+        author: "George Orwell",
+        publication_year: 1990,
+        publisher: "Signet Book",
+        imageURL: "http://images.amazon.com/images/P/0451524934.01.LZZZZZZZ.jpg"
+    )
+    
+    // Create a FinchNestViewModel instance for preview
+    let viewModel = FinchNestViewModel()
+    
+    // Return the view with the required environment object
+    return BookDetailView(book: sampleBook)
+        .environmentObject(viewModel)
 }

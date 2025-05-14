@@ -173,4 +173,5 @@ struct MoreInfoView: View {
 
 #Preview {
     MoreInfoView()
+        .environmentObject(FinchNestViewModel())
 }

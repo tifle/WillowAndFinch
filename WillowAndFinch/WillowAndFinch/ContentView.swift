@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     @State var selection = 1
+    @StateObject private var finchNestViewModel = FinchNestViewModel()
+
     var body: some View {
         TabView (selection: $selection){
             HomeView()
@@ -19,7 +21,7 @@ struct ContentView: View {
                 .tag(1)
             SearchView()
                 .tabItem {
-                    Image (systemName: "sparkles")
+                    Image (systemName: "magnifyingglass")
                     Text("Search")
                 }
                 .tag(2)
@@ -38,12 +40,12 @@ struct ContentView: View {
                 }
                 .tag(4)
             
-            ReadingView()
-                .tabItem{
-                    Image(systemName: "book.pages.fill")
-                    Text("Read")
-                }
-                .tag(5)
+//            ReadingView()
+//                .tabItem{
+//                    Image(systemName: "book.pages.fill")
+//                    Text("Read")
+//                }
+//                .tag(5)
 //            BookDetailView()
 //                .tabItem{
 //                    Image(systemName: "book.pages.fill")
@@ -51,10 +53,12 @@ struct ContentView: View {
 //                }
 //                .tag(6)
         }
+        .environmentObject(finchNestViewModel)
     }
 }
 
 #Preview {
     ContentView()
-        .preferredColorScheme(.dark)
+        .environmentObject(FinchNestViewModel())
+//        .preferredColorScheme(.dark)
 }

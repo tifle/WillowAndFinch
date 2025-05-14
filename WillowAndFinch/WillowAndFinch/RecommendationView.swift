@@ -106,4 +106,5 @@ struct RecommendationView: View {
 
 #Preview {
     RecommendationView()
+        .environmentObject(FinchNestViewModel())
 }

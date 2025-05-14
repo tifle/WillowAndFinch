@@ -43,4 +43,5 @@ struct TextToSpeechView: View {
 
 #Preview {
     TextToSpeechView()
+        .environmentObject(FinchNestViewModel())
 }

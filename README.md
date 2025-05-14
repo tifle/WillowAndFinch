@@ -11,3 +11,6 @@ The "Yellow Wallpaper" is the only text that we have in our system right now due
 * Text to Speech API: https://medium.com/@legin098/text-to-speech-with-swiftui-modularizing-voice-synthesis-in-swift-79410d6339ae AND https://www.hackingwithswift.com/quick-start/swiftui/how-to-read-text-from-a-textfield
 * Applying ML from Python to Swift: https://medium.com/@dari.tamim028/from-python-to-swift-a-beginners-guide-to-training-converting-and-using-core-ml-models-in-swift-cc45aa39d872
 * CustomTextEditor: https://developer.apple.com/documentation/swiftui/texteditor
+
+## Prompts from GenAI Models
+* Assistance with Lazy Grid: i want there to be rows of books. so if there's room, i want there to be X books per row. rn it's one book per row, but there's room for 2 (context is the current layout of the search view, which was one book per row)

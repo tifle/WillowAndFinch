@@ -1,5 +1,51 @@
 # WillowAndFinch
-Willow and Finch is a prototype IOS application that models a book selling application like Barnes and Noble.
+Willow and Finch is a prototype IOS application that models a reading and library application like Barnes & Noble or Project Gutenberg.
+---
+
+## Contributors
+- [Yanelly Mego](mailto:mego@chapman.edu)
+- [Tiffany Le](mailto:tifle@chapman.edu)
+
+## Files
+- ML Recommendation Algorithm
+  - book_data_cleaned.json
+  - book_data.json
+  - book.pkl.zip
+  - BookRecommended.py
+  - Books.csv.zip
+  - similarity_scores.pkl
+  - Users.csv
+  - PopularBookRecommendation.pkl
+  - pt.pkl
+  - Ratings.csv
+ - WillowAndFinch
+  - WillowAndFinch (Main)
+    - Assets.xcassets
+    - book_data_cleaned.json
+    - BookDetailView.swift
+    - BookRecommendation.swift
+    - ContentView.swift
+    - FinchNestView.swift
+    - HomeView.swift
+    - BookData.swift
+    - MoreInfoView.swift
+    - ReadingView.swift
+    - RecommendationView.swift
+    - WillowAndFinch.Swift
+    - CustomTextEditor.swift
+    - Book.swift
+    - BookMetadata.swift
+    - FinchNestViewModel.swift
+    - Info.plist
+    - SearchView.swift
+    - TextToSpeechError.swift
+    - TextToSpeechService.swift
+    - TextToSpeechServiceProtocol.swift
+    - TextToSpeechView.swift
+    - TextToSpeechViewModel.swift
+  - WillowAndFinch.xcodeproj
+  - WillowAndFinchTests
+  - WillowAndFinchUITests
 
 ## Text
 The "Yellow Wallpaper" is the only text that we have in our system right now due to copyright and API issues. For future plans, we would like to build a .JSON file with more than one text. Due to the limited timing and ensuring that the project is as complete, we are opting for one text. Any other text will be notified that the text is unavailable.

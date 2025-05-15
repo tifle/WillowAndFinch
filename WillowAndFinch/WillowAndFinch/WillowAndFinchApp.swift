@@ -40,7 +40,7 @@ struct WillowAndFinchApp: App {
         UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
     }
 
-
+    // view model that holds the saved variables
     @StateObject var viewModel = FinchNestViewModel()
 
     var body: some Scene {

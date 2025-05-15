@@ -11,17 +11,27 @@ import SwiftUI
 
 // MARK: - Main ReadingView
 struct ReadingView: View {
+    // TTS model
     @StateObject private var viewModelReading = TextToSpeechViewModel()
+    
+    // font
     @State private var fontName: String = "Avenir"
     @State private var fontSize: CGFloat = 16
+    
+    // theme
     @State private var useDarkBackground: Bool = false
     @State private var scrollOffset: CGFloat = 0
     @State private var contentHeight: CGFloat = 1
+    
+    // guide variables
     @State private var showGuide = false
     @State private var guideStep = 0
     @State private var dontShow = false
+    
+    // speaking
     @State private var isSpeakingText = false
 
+    // sample text due to copyright
     let title = "The Yellow Wallpaper"
     let author = "By Charlotte Perkins Gilman"
     let textContent = """
@@ -562,6 +572,7 @@ struct ReadingView: View {
 
     var body: some View {
         ZStack {
+            // show the top bar (font adjustments, scroll progress, dark/light mode)
             VStack(spacing: 0) {
                 SettingsBar(fontName: $fontName, fontSize: $fontSize, useDarkBackground: $useDarkBackground, scrollProgress: scrollProgress, viewModelReading: viewModelReading, isSpeakingText: $isSpeakingText, textContent: textContent)
                 ScrollViewContent(title: title, author: author, textContent: textContent, fontName: fontName, fontSize: fontSize, useDarkBackground: useDarkBackground, contentHeight: $contentHeight, scrollOffset: $scrollOffset)
@@ -571,6 +582,7 @@ struct ReadingView: View {
             GuideOverlay(showGuide: $showGuide, guideStep: $guideStep, dontShow: $dontShow)
         }
         .onAppear {
+            // dont' show if the user clicked on this before
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 if !dontShow {
                     showGuide = true
@@ -580,14 +592,14 @@ struct ReadingView: View {
             }
         }
     }
-
+    // track the user's progress for reading the book
     var scrollProgress: Double {
         let progress = Double(scrollOffset) / max(1, Double(contentHeight - UIScreen.main.bounds.height))
         return min(max(0, progress), 1.0)
     }
 }
 
-// MARK: - SettingsBar
+// adjust the setting bar
 struct SettingsBar: View {
     @Binding var fontName: String
     @Binding var fontSize: CGFloat
@@ -600,29 +612,35 @@ struct SettingsBar: View {
     var body: some View {
         HStack {
             HStack(spacing: 16) {
+                // toggle between  light and dark mode by click button
                 ThemeToggle(useDarkBackground: $useDarkBackground)
                 Menu {
+                    // choose font
                     Picker("Font", selection: $fontName) {
                         Text("Avenir").tag("Avenir")
                         Text("Georgia").tag("Georgia")
                         Text("Courier").tag("Courier")
                         Text("Times").tag("Times")
                     }
+                    // choose font size
                     VStack {
                         Text("Font Size: \(Int(fontSize))")
                         Slider(value: $fontSize, in: 12...30)
                     }
                 } label: {
+                    // SF symbol
                     Image(systemName: "textformat.size")
                         .font(.title3)
                 }
             }
             Spacer()
+            // user's progress
             HStack(spacing: 8) {
                 Text("\(Int(scrollProgress * 100))%")
                     .foregroundColor(useDarkBackground ? .white : .black)
                     .font(.caption)
                     .frame(width: 40)
+                // speaking button
                 TTSButtonView(viewModelReading: viewModelReading, isSpeaking: $isSpeakingText, text: textContent)
                     .foregroundColor(useDarkBackground ? .white : .black)
             }
@@ -632,7 +650,7 @@ struct SettingsBar: View {
     }
 }
 
-// MARK: - ScrollViewContent
+// the view of the actual text
 struct ScrollViewContent: View {
     let title: String
     let author: String
@@ -645,8 +663,10 @@ struct ScrollViewContent: View {
 
     var body: some View {
         GeometryReader { geo in
+            // scroll text
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
+                    // show title and author of the book with specific hiergraphy
                     VStack(alignment: .leading, spacing: 8) {
                         Text(title)
                             .font(.custom(fontName, size: 32))
@@ -659,6 +679,7 @@ struct ScrollViewContent: View {
                         Divider()
                     }
                     .padding(.horizontal)
+                    // show text with the theme and theme toggle
                     Text(textContent)
                         .font(.custom(fontName, size: fontSize))
                         .foregroundColor(useDarkBackground ? .white : .black)
@@ -686,7 +707,7 @@ struct ScrollViewContent: View {
     }
 }
 
-// MARK: - ProgressBar
+// track progress
 struct ProgressBar: View {
     var scrollProgress: Double
 
@@ -707,13 +728,14 @@ struct ProgressBar: View {
     }
 }
 
-// MARK: - GuideOverlay
+// overlay of the guide
 struct GuideOverlay: View {
     @Binding var showGuide: Bool
     @Binding var guideStep: Int
     @Binding var dontShow: Bool
 
     var body: some View {
+        // show guide if it hasn't already been showed previousoly
         if showGuide {
             Color.black.opacity(0.6)
                 .ignoresSafeArea()
@@ -721,22 +743,23 @@ struct GuideOverlay: View {
                     Rectangle()
                         .overlay(
                             Group {
-                                if guideStep == 0 {
+                                // go through the steps and move the circle based on the step
+                                if guideStep == 0 { // light and dark mode
                                     Circle()
                                         .frame(width: 50, height: 50)
                                         .offset(x: -UIScreen.main.bounds.width / 2 + 34, y: -302)
                                         .blendMode(.destinationOut)
-                                } else if guideStep == 1 {
+                                } else if guideStep == 1 { // font
                                     Circle()
                                         .frame(width: 50, height: 50)
                                         .offset(x: -UIScreen.main.bounds.width / 2 + 82, y: -302)
                                         .blendMode(.destinationOut)
-                                } else if guideStep == 2 {
+                                } else if guideStep == 2 { // reading progress
                                     Circle()
                                         .frame(width: 50, height: 50)
                                         .offset(x: -UIScreen.main.bounds.width / 2 + 323, y: -302)
                                         .blendMode(.destinationOut)
-                                } else if guideStep == 3 {
+                                } else if guideStep == 3 { // speaker
                                     Circle()
                                         .frame(width: 50, height: 50)
                                         .offset(x: -UIScreen.main.bounds.width / 2 + 363, y: -302)
@@ -748,20 +771,21 @@ struct GuideOverlay: View {
                 .compositingGroup()
             VStack {
                 Spacer()
+                // show the text at the bottom of the page with the instructions...corresponding to the circle placemets
                 Group {
-                    if guideStep == 0 {
+                    if guideStep == 0 { // theme
                         Text("Use the button to toggle between light and dark mode for reading.")
                             .font(.custom("Avenir", size: 15))
                             .foregroundColor(Color("TextColor"))
-                    } else if guideStep == 1 {
+                    } else if guideStep == 1 { // font
                         Text("Use the 'AA' icon to change font and size.")
                             .font(.custom("Avenir", size: 15))
                             .foregroundColor(Color("TextColor"))
-                    }else if guideStep == 2 {
+                    }else if guideStep == 2 { // reading progress
                         Text("Check your reading progress")
                             .font(.custom("Avenir", size: 15))
                             .foregroundColor(Color("TextColor"))
-                    }else if guideStep == 3 {
+                    }else if guideStep == 3 { // tts
                         Text("Use the speaker button to play or stop the audio narration.")
                             .font(.custom("Avenir", size: 15))
                             .foregroundColor(Color("TextColor"))
@@ -772,13 +796,13 @@ struct GuideOverlay: View {
                 .background(Color("BackgroundColor"))
                 .cornerRadius(12)
                 .padding()
-                Button(action: {
+                Button(action: { // show guide until we reached the final step
                     if guideStep < 3 {
                         guideStep += 1
                     } else {
                         showGuide = false
                     }
-                }) {
+                }) { // switch text based on the last and not last steps
                     Text(guideStep < 3 ? "Next" : "Got it!")
                         .bold()
                         .padding()
@@ -795,7 +819,7 @@ struct GuideOverlay: View {
     }
 }
 
-// MARK: - ContentHeightKey
+// check the content height
 struct ContentHeightKey: PreferenceKey {
     static var defaultValue: CGFloat = 1
     static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
@@ -803,7 +827,7 @@ struct ContentHeightKey: PreferenceKey {
     }
 }
 
-// MARK: - TTSButtonView
+// button for text to speech / speaker
 struct TTSButtonView: View {
     @ObservedObject var viewModelReading: TextToSpeechViewModel
     @Binding var isSpeaking: Bool
@@ -827,14 +851,15 @@ struct TTSButtonView: View {
     }
 }
 
-// MARK: - ThemeToggle
+// allow the user to toggle between light and dark mode for reading
 struct ThemeToggle: View {
     @Binding var useDarkBackground: Bool
 
     var body: some View {
+        // circle button that is activated
         Button(action: {
             useDarkBackground.toggle()
-        }) {
+        }) { // show respective SF symbol based on the light or dark mode
             Image(systemName: useDarkBackground ? "moon.fill" : "sun.max.fill")
                 .font(.system(size: 18))
                 .foregroundColor(useDarkBackground ? .blue : .yellow)

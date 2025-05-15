@@ -50,7 +50,6 @@ struct RecommendationView: View {
                             .padding()
                         
                         // Navigates to BookDetailView
-                        //                        if showDetails, let recommendation = bookRecommendation {
                         if showDetails,
                            let recommendation = bookRecommendation.0{
                             

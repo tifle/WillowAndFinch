@@ -9,6 +9,7 @@ import Foundation
 
 @MainActor
 class TextToSpeechViewModel: ObservableObject {
+    // properties
     @Published var inputText: String = ""
     @Published var isSpeaking: Bool = false
     @Published var errorMessage: String?
@@ -18,7 +19,7 @@ class TextToSpeechViewModel: ObservableObject {
     init(service: TextToSpeechServiceProtocol = TextToSpeechService()) {
         self.textToSpeechService = service
     }
-
+    // speak function
     func speak() {
         guard !inputText.isEmpty else { return }
         isSpeaking = true
@@ -32,7 +33,7 @@ class TextToSpeechViewModel: ObservableObject {
             isSpeaking = false
         }
     }
-
+    // stop speaking
     func stopSpeaking() {
         do {
             try textToSpeechService.stopSpeaking()

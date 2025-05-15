@@ -14,3 +14,5 @@ The "Yellow Wallpaper" is the only text that we have in our system right now due
 
 ## Prompts from GenAI Models
 * Assistance with Lazy Grid: i want there to be rows of books. so if there's room, i want there to be X books per row. rn it's one book per row, but there's room for 2 (context is the current layout of the search view, which was one book per row)
+* Assistance with Recommended Books showing in Home page: I have this code written in Swift for Xcode. The part i'm concerned about is the Async Image section. Whenever the if statement is true, the Async Image only shows the default cover image. However, if I modify the size of the image while it is running on the preview, the correct cover images will populate. What is causing this issue and how can I fix it?
+* The remaining chats didn't have direct prompts as we would enter errors that we encountered
